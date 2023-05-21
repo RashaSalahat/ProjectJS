@@ -5,17 +5,15 @@ var ID=1;
 class Task {
     id;
     isCompleted;
-    priorityLevel;
-    Date;
-    description;
-  constructor(id,isCompleted,priorityLevel,Date,description) {
+  constructor(id,isCompleted) {
     this.id= id;
     this.isCompleted=isCompleted;
-    this.priorityLevel=priorityLevel;
-    this.Date=Date;
-    this.description=description;
   }
 }
+Task.prototype.description ="" ;
+Task.prototype.dueDate="" ;
+Task.prototype.priorityLevel="" ;
+
 let myArray = [];
 console.log(`***************************
 Welcome to JS TODO-APP
@@ -39,7 +37,7 @@ var option =prompt(`:`);
 if(option == "9"){
     break;
 }
-console.log(`YOUR` +option);
+//console.log(`YOUR` +option);
 switch(option){
     case "1":
     addTask();
@@ -47,33 +45,35 @@ switch(option){
     break;
     case "2":
    console.log(myArray);
-
     break;
     case "3":
-        const done = myArray.filter(function(item) {
-            return item.isCompleted == "true";
-          });
-          console.log(done);
-          break;
+    const done = myArray.filter(function(item) {
+    return item.isCompleted == "true";
+    });
+    console.log(done);
+    break;
     case "4":
     mark();
+    console.log(`Task is Completed` );
     break;
     case "5":
     remove();
+    console.log(`Task is Removed` );
     break;
     case "6":
     sorting2();
+    console.log(myArray);
     break;
     case "7":
-       // myArray.sort(compareByPriority);
-       sorting();
-
-        break;
+    sorting();
+    console.log(myArray);
+    break;
     case "8":
-        myArray.splice(0,myArray.length);
-        break;
+    myArray.splice(0,myArray.length);
+    console.log(`All Tasks Removed!` );
+    break;
     default:
-      //  console.log(typeofoption );
+     
 
 
 }
@@ -82,14 +82,11 @@ function addTask(){
     let priorityLevel=prompt(`priorityLevel:  `);
     const dueDate =(prompt(`dueDate:  `));
     let description =prompt(`description:  `);
-    const task=new Task(ID,isCompleted,priorityLevel,dueDate,description);
+    const task=new Task(ID,isCompleted);
+    task.description =description ;
+    task.dueDate=dueDate;
+    task.priorityLevel=priorityLevel;
     ID++;
- //let description =prompt(`description:  `);
- //Task.prototype.description =description ;
-// let dueDate =prompt(`dueDate:  `);
-// Task.prototype.dueDate=new Date(dueDate);
- //let priorityLevel=prompt(`priorityLevel:  `);
- //Task.prototype.priorityLevel=(priorityLevel);
   myArray.push(task);
    }
 
@@ -110,8 +107,8 @@ function addTask(){
           
     }
     function compareByDate(a, b) {
-        const date1=new Date(a.Date);
-        const date2 =new Date(b.Date);
+        const date1=new Date(a.dueDate);
+        const date2 =new Date(b.dueDate);
         if (date1 <date2) {
           return -1;
         }
